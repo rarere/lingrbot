@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = "0.01";
 
 use utf8;
+use Encode;
 use JSON;
 
 sub new {
@@ -21,7 +22,7 @@ sub new {
     if (defined $ENV{'CONTENT_LENGTH'}) {
         read(STDIN, $data, $ENV{'CONTENT_LENGTH'});
     }
-    $args{json}   = decode_json($data);
+    $args{json} = decode_json($data);
 
     my $self = \%args;
     bless $self, $class;
@@ -47,7 +48,7 @@ sub print_text {
     my $self = shift;
     my $text = shift;
     print "Content-Type: text/plain\n\n";
-    print "$text\n";
+    print encode_utf8($text)."\n";
 }
 sub print_empty {
     my $self = shift;
