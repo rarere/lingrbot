@@ -8,7 +8,6 @@ use warnings;
 our $VERSION = "0.01";
 
 use utf8;
-use Encode;
 use JSON;
 
 sub new {
@@ -34,6 +33,11 @@ sub get_speaker_id {
     my $self = shift;
     my $json = $self->{json};
     return $json->{events}->[0]->{message}->{speaker_id};
+}
+sub get_nickname {
+    my $self = shift;
+    my $json = $self->{json};
+    return $json->{events}->[0]->{message}->{nickname};
 }
 sub get_text {
     my $self = shift;

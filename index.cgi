@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 use utf8;
-use Encode;
-
 use LingrBot;
 
 my $bot = LingrBot->new();
-my $user = $bot->get_speaker_id;
+my $user = $bot->get_nickname;
 my $text = $bot->get_text;
 
 

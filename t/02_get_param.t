@@ -11,6 +11,10 @@ subtest 'get_speaker_id' => sub {
     my $str = $obj->get_speaker_id;
     is $str, '';
 };
+subtest 'get_nickname' => sub {
+    my $str = $obj->get_nickname;
+    is $str, '';
+};
 subtest 'get_text' => sub {
     my $str = $obj->get_text;
     is $str, '';
