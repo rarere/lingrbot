@@ -6,8 +6,6 @@ use warnings;
 use utf8;
 use LingrBot;
 use SinatraAdventCalendar2013;
-use DateTime;
-use Encode;
 
 my $bot = LingrBot->new();
 my $user = $bot->get_nickname;
