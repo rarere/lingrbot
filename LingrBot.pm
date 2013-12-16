@@ -47,15 +47,10 @@ sub get_text {
 sub print_text {
     my $self = shift;
     my $text = shift;
+    $text //= "";
     print "Content-Type: text/plain\n\n";
     print encode_utf8($text)."\n";
 }
-sub print_empty {
-    my $self = shift;
-    print "Content-Type: text/plain\n\n";
-    print "";
-}
-
 
 
 1;

@@ -13,6 +13,6 @@ my $text = $bot->get_text;
 if ($text eq 'hi!') {
     $bot->print_text("hi, $user");
 } else {
-    $bot->print_empty();
+    $bot->print_text();
 }
 

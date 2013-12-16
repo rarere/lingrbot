@@ -12,9 +12,5 @@ subtest 'print_text' => sub {
     my $str = $obj->print_text("hi! $user");
     is $str, 1;
 };
-subtest 'print_empty' => sub {
-    my $str = $obj->print_empty();
-    is $str, 1;
-};
 
 done_testing;
