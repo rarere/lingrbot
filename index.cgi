@@ -1,11 +1,10 @@
 #!/usr/bin/perl -w
 
-use v5.18;
-use strict;
+use v5.14;
 use warnings;
 use utf8;
 use LingrBot;
-use SinatraAdventCalendar2013;
+use LingrBot::SinatraAdventCalendar2013;
 
 my $bot = LingrBot->new();
 my $user = $bot->get_nickname;

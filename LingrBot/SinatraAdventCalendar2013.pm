@@ -1,7 +1,6 @@
 package SinatraAdventCalendar2013;
 
-use v5.18;
-use strict;
+use v5.14;
 use warnings;
 use utf8;
 use Encode;

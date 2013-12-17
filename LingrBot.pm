@@ -1,8 +1,7 @@
 #!/usr/bin/perl -w
 package LingrBot;
 
-use 5.016003;
-use strict;
+use v5.14;
 use warnings;
 
 our $VERSION = "0.01";
