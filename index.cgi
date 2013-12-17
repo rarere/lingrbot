@@ -18,7 +18,7 @@ if ($text eq 'hi!') {
 } elsif ($str[0] eq '!tekitou') {
     if ($str[1] =~ /sinatra/) {
         my $sac;
-        if (defined $str[2]) {
+        if (defined $str[2] && $str[2] =~ /^[0-9]+$/) {
             $sac = SinatraAdventCalendar2013->new(day => $str[2]);
         } else {
             $sac = SinatraAdventCalendar2013->new();
