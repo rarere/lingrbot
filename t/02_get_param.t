@@ -1,5 +1,5 @@
 # t/02_get_param.t
-use strict;
+use v5.14;
 use warnings;
 use Test::More;
 use LingrBot;

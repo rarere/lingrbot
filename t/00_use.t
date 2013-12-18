@@ -1,5 +1,5 @@
 # t/00_use.t
-use strict;
+use v5.14;
 use warnings;
 use Test::More;
 use LingrBot;

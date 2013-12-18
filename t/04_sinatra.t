@@ -1,8 +1,8 @@
 # t/04_sinatra.t
-use strict;
+use v5.14;
 use warnings;
 use Test::More;
-use SinatraAdventCalendar2013;
+use LingrBot::SinatraAdventCalendar2013;
 
 
 subtest 'get_text' => sub {
