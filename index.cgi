@@ -15,15 +15,9 @@ my @str = split(/ /, $text);
 if ($text eq 'hi!') {
     $bot->print_text("hi, $user");
 } elsif ($str[0] eq '!tekitou') {
-    if ($str[1] =~ /sinatra/) {
-        my $sac;
-        if (defined $str[2] && $str[2] =~ /^[0-9]+$/) {
-            $sac = SinatraAdventCalendar2013->new(day => $str[2]);
-        } else {
-            $sac = SinatraAdventCalendar2013->new();
-        }
-        print "Content-type: text/plain\n\n";
-        print $sac->get_text."\n";
+    if ($str[1] =~ /sac/) {
+        my $sac_link = SinatraAdventCalendar2013->get_text($text);
+        $bot->print_text($sac_link);
     }
 } else {
     $bot->print_text();

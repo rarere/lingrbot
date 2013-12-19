@@ -3,56 +3,84 @@ package SinatraAdventCalendar2013;
 use v5.14;
 use warnings;
 use utf8;
-use Encode;
 use XML::RSS;
 use LWP::Simple;
 use DateTime;
-use DateTime::Format::HTTP;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
-sub new {
+# Sinatra Advent Calendar 2013
+my $uri = "http://www.adventar.org/calendars/262.rss";
+
+sub get_text {
     my $class = shift;
-    my %args = @_;
+    my ($text) = @_;
 
+    # 引数なしの場合、今日の記事を探すように文字列を用意
+    $text //= "!tekitou sac";
+
+    my @str = split(/ /, $text);
+    # 3つ目の文字列がない場合は今日の日付を用意
+    $str[2] //= &get_date();
+
+    my $link = "";
+    if (defined $str[2]) {
+        if ($str[2] =~ /^[0-9]+$/) {
+            # 日数
+            $link = &get_data_day($str[2]);
+        } else {
+            # 文字列検索
+            $link = &get_data_str($str[2]);
+        }
+    }
+
+    return $link;
+}
+
+sub get_date {
     my $dt = DateTime->now(time_zone => 'local');
-    $args{day} //= $dt->day;
-    $args{dt} = DateTime->new(year => 2013, month => 12, day => $args{day});
+    return $dt->day;
+}
 
-    # Sinatra Advent Calendar
-    my $uri = "http://www.adventar.org/calendars/262.rss";
+sub get_data_day {
+    my ($day) = @_;
+
     my $doc = get $uri;
     my $rss = XML::RSS->new;
     $rss->parse($doc);
 
+    my $text = "";
     for my $item (@{$rss->{items}}) {
-        my $cal_dt = DateTime::Format::HTTP->parse_datetime($item->{pubDate});
-        if ($args{dt}->date eq $cal_dt->date) {
-            $args{title} = encode_utf8($item->{title});
-            $args{description} = encode_utf8($item->{description});
-            $args{link} = $item->{link};
+        $item->{pubDate} =~ /\s?(\d+).*/;
+        my $cal_day = $1;
+
+        if ($day == $cal_day) {
+            $text = $item->{title} . "\n" .
+                    $item->{description} . "\n" .
+                    $item->{link} . "\n";
         }
-    }
-
-    my $self = \%args;
-    bless $self, $class;
-
-    return $self;
-}
-
-sub get_text {
-    my $self = shift;
-
-    my $text;
-    if (defined $self->{title}) {
-        $text //= $self->{title} . "\n" . 
-                  $self->{description} . "\n" .
-                  $self->{link};
-    } else {
-        $text = "";
     }
     return $text;
 }
+
+sub get_data_str {
+    my ($str) = @_;
+
+    my $doc = get $uri;
+    my $rss = XML::RSS->new;
+    $rss->parse($doc);
+
+    my $text = "";
+    for my $item (@{$rss->{items}}) {
+        if ($str =~ /$item->{description}/) {
+            $text = $item->{title} . "\n" .
+                    $item->{description} . "\n" .
+                    $item->{link} . "\n";
+        }
+    }
+    return $text;
+}
+
 
 1;
 
