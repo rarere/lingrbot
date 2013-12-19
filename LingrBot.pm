@@ -48,7 +48,7 @@ sub print_text {
     my $text = shift;
     $text //= "";
     print "Content-Type: text/plain\n\n";
-    print encode_utf8($text)."\n";
+    print encode_utf8($text);
 }
 
 
