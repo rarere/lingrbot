@@ -19,6 +19,13 @@ subtest 'exec mojiretsu' => sub {
 http://advent.nzwsch.com/2013/internalization
 ';
 };
+subtest 'exec mojiretsu kuni' => sub {
+    my $str = SinatraAdventCalendar2013->get_text("!tekitou sac 国");
+    is $str, 'Sinatra Advent Calendar 2013 1 日目
+国際化
+http://advent.nzwsch.com/2013/internalization
+';
+};
 
 subtest 'exec ' => sub {
     my $str = SinatraAdventCalendar2013->get_text();

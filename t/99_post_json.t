@@ -104,4 +104,26 @@ http://advent.nzwsch.com/2013/testing
 ';
 };
 
+subtest encode_utf8('post !tekitou sac R') => sub {
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"!tekitou sac R","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    $json = encode_utf8($json);
+    $req->content($json);
+    $res = $ua->request($req);
+
+    my $str;
+    if ($res->is_success) {
+        $str = $res->decoded_content;
+    } else {
+        $str = $res->code . ":" . $res->message;
+    }
+
+    is $str, 'Sinatra Advent Calendar 2013 9 日目
+RSSフィード
+http://advent.nzwsch.com/2013/rss-feed
+Sinatra Advent Calendar 2013 6 日目
+REST API
+http://advent.nzwsch.com/2013/rest-api
+';
+};
+
 done_testing;

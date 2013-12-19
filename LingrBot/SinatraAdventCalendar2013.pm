@@ -71,11 +71,13 @@ sub get_data_str {
     $rss->parse($doc);
 
     my $text = "";
+    my $temptext = "";
     for my $item (@{$rss->{items}}) {
-        if ($str =~ /$item->{description}/) {
-            $text = $item->{title} . "\n" .
-                    $item->{description} . "\n" .
-                    $item->{link} . "\n";
+        if ($item->{description} =~ /$str/) {
+            $temptext = $item->{title} . "\n" .
+                        $item->{description} . "\n" .
+                        $item->{link} . "\n";
+            $text = $text . $temptext;
         }
     }
     return $text;
