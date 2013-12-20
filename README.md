@@ -13,6 +13,12 @@ SinatraAdventCalendar2013.pm
 http://www.adventar.org/calendars/262
 からRSSを取得してLingrへ送る用の文字列を生成する
 
+Nomimono.pm
+-----------
+「マスター、任意一杯」という発言があった時に、
+「つ 任意」と返すだけ
+
+
 
 
 
