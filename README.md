@@ -18,6 +18,15 @@ Nomimono.pm
 「マスター、任意一杯」という発言があった時に、
 「つ 任意」と返すだけ
 
+Tenki.pm
+--------
+Livedoor Weatherを利用した何か
+
+
+Tekitou.pm
+----------
+!tekitouを振り分け
+
 
 
 
