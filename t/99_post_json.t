@@ -67,7 +67,8 @@ subtest 'post hi!(japanese)' => sub {
 };
 
 subtest 'post !tekitou sac 10' => sub {
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"!tekitou sac 10","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    my $commandstr = "!tekitou sac 10";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
     $json = encode_utf8($json);
     $req->content($json);
     $res = $ua->request($req);
@@ -86,7 +87,8 @@ http://advent.nzwsch.com/2013/uploading-file
 };
 
 subtest encode_utf8('post !tekitou sac テスト') => sub {
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"!tekitou sac テスト","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    my $commandstr = "!tekitou sac テスト";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
     $json = encode_utf8($json);
     $req->content($json);
     $res = $ua->request($req);
@@ -105,7 +107,8 @@ http://advent.nzwsch.com/2013/testing
 };
 
 subtest 'post !tekitou sac R' => sub {
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"!tekitou sac R","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    my $commandstr = "!tekitou sac R";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
     $json = encode_utf8($json);
     $req->content($json);
     $res = $ua->request($req);
@@ -126,8 +129,9 @@ http://advent.nzwsch.com/2013/rest-api
 ';
 };
 
-subtest 'otya' => sub {
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"マスター、お茶一杯","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+subtest encode_utf8('post マスター、お茶一杯') => sub {
+    my $commandstr = "マスター、お茶一杯";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
     $json = encode_utf8($json);
     $req->content($json);
     $res = $ua->request($req);
@@ -139,6 +143,44 @@ subtest 'otya' => sub {
         $str = $res->code . ":" . $res->message;
     }
     is $str, 'つ お茶';
+};
+
+subtest 'post !tekitou tenki' => sub {
+    my $commandstr = "!tekitou tenki";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    $json = encode_utf8($json);
+    $req->content($json);
+    $res = $ua->request($req);
+
+    my $str;
+    if ($res->is_success) {
+        $str = $res->decoded_content;
+    } else {
+        $str = $res->code . ":" . $res->message;
+    }
+    is $str, '';
+};
+
+subtest encode_utf8('post !tekitou 広島') => sub {
+    my $commandstr = "!tekitou tenki 広島";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    $json = encode_utf8($json);
+    $req->content($json);
+    $res = $ua->request($req);
+
+    my $str;
+    if ($res->is_success) {
+        $str = $res->decoded_content;
+    } else {
+        $str = $res->code . ":" . $res->message;
+    }
+    is $str, '広島県 広島 の天気
+http://weather.livedoor.com/area/forecast/340010
+広島市
+http://weather.livedoor.com/area/forecast/3410000
+広島県 庄原 の天気
+http://weather.livedoor.com/area/forecast/340020
+';
 };
 
 done_testing;
