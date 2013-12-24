@@ -4,7 +4,7 @@ use v5.14;
 use warnings;
 use utf8;
 use XML::RSS;
-use LWP::Simple;
+use LWP::UserAgent;
 use DateTime;
 
 our $VERSION = "0.02";
@@ -45,9 +45,14 @@ sub get_date {
 sub get_data_day {
     my ($day) = @_;
 
-    my $doc = get $uri;
+    my $ua = LWP::UserAgent->new();
+    my $response = $ua->get($uri);
     my $rss = XML::RSS->new;
-    $rss->parse($doc);
+    if ($response->is_success) {
+        $rss->parse($response->decoded_content);
+    } else {
+        return "";
+    }
 
     my $text = "";
     for my $item (@{$rss->{items}}) {
@@ -66,9 +71,14 @@ sub get_data_day {
 sub get_data_str {
     my ($str) = @_;
 
-    my $doc = get $uri;
+    my $ua = LWP::UserAgent->new();
+    my $response = $ua->get($uri);
     my $rss = XML::RSS->new;
-    $rss->parse($doc);
+    if ($response->is_success) {
+        $rss->parse($response->decoded_content);
+    } else {
+        return "";
+    }
 
     my $text = "";
     my $temptext = "";
