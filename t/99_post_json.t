@@ -174,12 +174,26 @@ subtest encode_utf8('post !tekitou 広島') => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, '広島県 広島 の天気
+    is $str, '北広島市
+http://weather.livedoor.com/area/forecast/0123400
+広島県 広島 の天気
 http://weather.livedoor.com/area/forecast/340010
+今日(2013-12-24): 晴時々曇 最低:  最高: 
+明日(2013-12-25): 晴時々曇 最低: 1 最高: 9
+明後日(2013-12-26): 曇時々雨 最低:  最高: 
+
 広島市
 http://weather.livedoor.com/area/forecast/3410000
+東広島市
+http://weather.livedoor.com/area/forecast/3421200
 広島県 庄原 の天気
 http://weather.livedoor.com/area/forecast/340020
+今日(2013-12-24): 曇時々晴 最低:  最高: 
+明日(2013-12-25): 晴時々曇 最低: -5 最高: 6
+明後日(2013-12-26): 曇時々雨 最低:  最高: 
+
+北広島町
+http://weather.livedoor.com/area/forecast/3436900
 ';
 };
 
