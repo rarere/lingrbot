@@ -7,7 +7,7 @@ use Encode;
 use LWP::UserAgent;
 use JSON::PP;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 sub get_text {
     my $class = shift;
@@ -55,7 +55,7 @@ sub get_weather {
     if ($response->is_success) {
         $rawjson = $response->decoded_content;
     } else {
-        return "error" . $response->status_line;
+        return "";
     }
     my $json = decode_json($rawjson);
     my $ret = "";
