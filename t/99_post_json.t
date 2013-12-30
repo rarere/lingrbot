@@ -82,6 +82,26 @@ subtest encode_utf8('post マスター、お茶一杯') => sub {
     is $str, 'つ お茶';
 };
 
+subtest 'post !tekitou' => sub {
+    my $commandstr = "!tekitou";
+    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
+    $json = encode_utf8($json);
+    $req->content($json);
+    $res = $ua->request($req);
+
+    my $str;
+    if ($res->is_success) {
+        $str = $res->decoded_content;
+    } else {
+        $str = $res->code . ":" . $res->message;
+    }
+    is $str, 'コマンド一覧:
+hi!
+マスター、[任意]一杯
+!tekitou tenki [場所]
+';
+};
+
 subtest 'post !tekitou tenki' => sub {
     my $commandstr = "!tekitou tenki";
     $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';

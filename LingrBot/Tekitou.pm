@@ -17,6 +17,16 @@ sub get_text {
 
     my @str = split(' ', $text);
 
+    if ($text eq "!tekitou") {
+        my $ret = <<EOS;
+コマンド一覧:
+hi!
+マスター、[任意]一杯
+!tekitou tenki [場所]
+EOS
+        return $ret;
+    }
+
     my $ret = "";
     if ($str[0] eq '!tekitou') {
         if ($str[1] =~ /tenki/) {
