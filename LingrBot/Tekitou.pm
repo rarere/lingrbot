@@ -6,8 +6,9 @@ use utf8;
 use Encode;
 use LingrBot::Nomimono;
 use LingrBot::Tenki;
+use LingrBot::Help;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 sub get_text {
     my $class = shift;
@@ -18,19 +19,16 @@ sub get_text {
     my @str = split(' ', $text);
 
     if ($text eq "!tekitou") {
-        my $ret = <<EOS;
-コマンド一覧:
-hi!
-マスター、[任意]一杯
-!tekitou tenki [場所]
-EOS
+        my $ret = "呼ばれたかもしれない";
         return $ret;
     }
 
     my $ret = "";
     if ($str[0] eq '!tekitou') {
-        if ($str[1] =~ /tenki/) {
+        if ($str[1] eq "tenki") {
             $ret = Tenki->get_text($text);
+        } elsif ($str[1] eq "help") {
+            $ret = Help->get_text($text);
         }
     } elsif ($text =~ /^マスター、/) {
         $ret = Nomimono->get_text($text);
