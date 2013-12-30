@@ -6,11 +6,7 @@ use LingrBot::Tekitou;
 
 subtest '!tekitou' => sub {
     my $str = Tekitou->get_text("!tekitou");
-    is $str, 'コマンド一覧:
-hi!
-マスター、[任意]一杯
-!tekitou tenki [場所]
-';
+    is $str, '呼ばれたかもしれない';
 };
 
 done_testing;

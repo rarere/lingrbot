@@ -95,11 +95,7 @@ subtest 'post !tekitou' => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, 'コマンド一覧:
-hi!
-マスター、[任意]一杯
-!tekitou tenki [場所]
-';
+    is $str, '呼ばれたかもしれない';
 };
 
 subtest 'post !tekitou tenki' => sub {
