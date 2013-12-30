@@ -7,7 +7,7 @@ use Encode;
 use LWP::UserAgent;
 use JSON::PP;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 sub get_text {
     my $class = shift;
@@ -15,12 +15,13 @@ sub get_text {
     $str //= "!tekitou tenki";
 
     my @search = split(" ", $str);
-    return "" if ($search[1] ne "tenki");
-    return "" if (!defined $search[2]);
+    return "Usage: !tekitou tenki [場所]" if ($search[1] ne "tenki");
+    return "Usage: !tekitou tenki [場所]" if (!defined $search[2]);
 
     my $file = "./tenkilink.csv";
     my @data;
     my $text = "";
+    my $flag = 0;
     open (my $fh, "<", $file)
         or die "Cannot open $file: $!";
 
@@ -34,10 +35,12 @@ sub get_text {
             if ($data[2] eq "1") {
                 $text = $text . get_weather($data[1])."\n";
             }
+            $flag = 1;
         }
     }
     close $fh;
 
+    return "見つかりませんでした" if ($flag == 0);
     return $text;
 }
 
