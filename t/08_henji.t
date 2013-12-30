@@ -2,10 +2,10 @@ use v5.14;
 use warnings;
 use utf8;
 use Test::More;
-use LingrBot::Tekitou;
+use LingrBot::Henji;
 
 subtest '!tekitou' => sub {
-    my $str = Tekitou->get_text("!tekitou");
+    my $str = Henji->get_text("!tekitou help");
     isnt $str, '';
 };
 

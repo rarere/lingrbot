@@ -95,7 +95,7 @@ subtest 'post !tekitou' => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, '呼ばれたかもしれない';
+    isnt $str, '';
 };
 
 subtest 'post !tekitou tenki' => sub {

@@ -4,6 +4,7 @@ use v5.14;
 use warnings;
 use utf8;
 use Encode;
+use LingrBot::Henji;
 use LingrBot::Nomimono;
 use LingrBot::Tenki;
 use LingrBot::Help;
@@ -17,17 +18,19 @@ sub get_text {
     return "" if (!defined $text);
 
     my @str = split(' ', $text);
+    my $ret = "";
 
+    # 返事
     if ($text eq "!tekitou") {
-        my $ret = "呼ばれたかもしれない";
+        $ret = Henji->get_text($text);
         return $ret;
     }
 
-    my $ret = "";
+    # !tekitou コマンド
     if ($str[0] eq '!tekitou') {
-        if ($str[1] eq "tenki") {
+        if (defined $str[1] && $str[1] eq "tenki") {
             $ret = Tenki->get_text($text);
-        } elsif ($str[1] eq "help") {
+        } elsif (defined $str[1] && $str[1] eq "help") {
             $ret = Help->get_text($text);
         }
     } elsif ($text =~ /^マスター、/) {
