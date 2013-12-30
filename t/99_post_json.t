@@ -66,69 +66,6 @@ subtest 'post hi!(japanese)' => sub {
     is $str, 'hi, にっくねーむ';
 };
 
-subtest 'post !tekitou sac 10' => sub {
-    my $commandstr = "!tekitou sac 10";
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
-    $json = encode_utf8($json);
-    $req->content($json);
-    $res = $ua->request($req);
-
-    my $str;
-    if ($res->is_success) {
-        $str = $res->decoded_content;
-    } else {
-        $str = $res->code . ":" . $res->message;
-    }
-
-    is $str, 'Sinatra Advent Calendar 2013 10 日目
-ファイルのアップロード
-http://advent.nzwsch.com/2013/uploading-file
-';
-};
-
-subtest encode_utf8('post !tekitou sac テスト') => sub {
-    my $commandstr = "!tekitou sac テスト";
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
-    $json = encode_utf8($json);
-    $req->content($json);
-    $res = $ua->request($req);
-
-    my $str;
-    if ($res->is_success) {
-        $str = $res->decoded_content;
-    } else {
-        $str = $res->code . ":" . $res->message;
-    }
-
-    is $str, 'Sinatra Advent Calendar 2013 15 日目
-テスト
-http://advent.nzwsch.com/2013/testing
-';
-};
-
-subtest 'post !tekitou sac R' => sub {
-    my $commandstr = "!tekitou sac R";
-    $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
-    $json = encode_utf8($json);
-    $req->content($json);
-    $res = $ua->request($req);
-
-    my $str;
-    if ($res->is_success) {
-        $str = $res->decoded_content;
-    } else {
-        $str = $res->code . ":" . $res->message;
-    }
-
-    is $str, 'Sinatra Advent Calendar 2013 9 日目
-RSSフィード
-http://advent.nzwsch.com/2013/rss-feed
-Sinatra Advent Calendar 2013 6 日目
-REST API
-http://advent.nzwsch.com/2013/rest-api
-';
-};
-
 subtest encode_utf8('post マスター、お茶一杯') => sub {
     my $commandstr = "マスター、お茶一杯";
     $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
@@ -158,11 +95,11 @@ subtest 'post !tekitou tenki' => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, '';
+    is $str, 'Usage: !tekitou tenki [場所]';
 };
 
-subtest encode_utf8('post !tekitou 広島') => sub {
-    my $commandstr = "!tekitou tenki 広島";
+subtest encode_utf8('post !tekitou 札幌市') => sub {
+    my $commandstr = "!tekitou tenki 札幌市";
     $json = '{"status":"ok","counter":208,"events":[{"event_id":208,"message":{"id":82,"room":"myroom","public_session_id":"UBDH84","icon_url":"http://example.com/myicon.png","type":"user","speaker_id":"dareka","nickname":"にっくねーむ","text":"'.  $commandstr . '","timestamp":"2011-02-12T08:13:51Z","local_id":"pending-UBDH84-1"}}]}';
     $json = encode_utf8($json);
     $req->content($json);
@@ -174,26 +111,8 @@ subtest encode_utf8('post !tekitou 広島') => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, '北広島市
-http://weather.livedoor.com/area/forecast/0123400
-広島県 広島 の天気
-http://weather.livedoor.com/area/forecast/340010
-今日(2013-12-24): 晴時々曇 最低:  最高: 
-明日(2013-12-25): 晴時々曇 最低: 1 最高: 9
-明後日(2013-12-26): 曇時々雨 最低:  最高: 
-
-広島市
-http://weather.livedoor.com/area/forecast/3410000
-東広島市
-http://weather.livedoor.com/area/forecast/3421200
-広島県 庄原 の天気
-http://weather.livedoor.com/area/forecast/340020
-今日(2013-12-24): 曇時々晴 最低:  最高: 
-明日(2013-12-25): 晴時々曇 最低: -5 最高: 6
-明後日(2013-12-26): 曇時々雨 最低:  最高: 
-
-北広島町
-http://weather.livedoor.com/area/forecast/3436900
+    is $str, '札幌市
+http://weather.livedoor.com/area/forecast/0110000
 ';
 };
 
