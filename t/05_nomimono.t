@@ -11,7 +11,7 @@ subtest 'test' => sub {
 
 subtest 'otya' => sub {
     my $str = Nomimono->get_text("マスター、お茶一杯");
-    is $str, 'つ お茶';
+    like $str, qr/つ (お茶|請求書)/;
 };
 
 subtest 'kaikei' => sub {

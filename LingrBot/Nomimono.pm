@@ -4,7 +4,7 @@ use v5.14;
 use warnings;
 use utf8;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 sub get_text {
     my $class = shift;
@@ -24,7 +24,14 @@ sub get_text {
 
 sub ippai {
     my ($text) = @_;
-    my $ret = "つ ".$text;
+    my $num = rand(100);
+
+    my $ret;
+    if ($num < 80) {
+        $ret = "つ ".$text;
+    } else {
+        $ret = "つ 請求書";
+    }
     return $ret;
 }
 
