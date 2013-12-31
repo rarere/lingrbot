@@ -79,7 +79,7 @@ subtest encode_utf8('post マスター、お茶一杯') => sub {
     } else {
         $str = $res->code . ":" . $res->message;
     }
-    is $str, 'つ お茶';
+    like $str, qr/つ (お茶|請求書)/;
 };
 
 subtest 'post !tekitou' => sub {
