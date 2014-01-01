@@ -26,8 +26,8 @@ http://weather.livedoor.com/area/forecast/3420200
 ';
 };
 
-subtest 'japanese: sapporo shi' => sub {
-    my $str = Tenki->get_text("!tekitou tenki 札幌市");
+subtest 'english: sapporo shi' => sub {
+    my $str = Tenki->get_text("!tekitou tenki sapporo");
     is $str, '札幌市
 http://weather.livedoor.com/area/forecast/0110000
 ';

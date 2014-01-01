@@ -6,6 +6,7 @@ use utf8;
 use Encode;
 use LWP::UserAgent;
 use JSON::PP;
+use DBI;
 
 our $VERSION = "0.04";
 
@@ -15,40 +16,77 @@ sub get_text {
     $str //= "!tekitou tenki";
 
     my @search = split(" ", $str);
+
     return "Usage: !tekitou tenki [場所]" if ($search[1] ne "tenki");
     return "Usage: !tekitou tenki [場所]" if (!defined $search[2]);
 
-    my $file = "./tenkilink.csv";
-    my @data;
-    my $text = "";
-    my $flag = 0;
-    open (my $fh, "<", $file)
-        or die "Cannot open $file: $!";
-
-    while (my $line = readline $fh) {
-        chomp $line;
-        @data = split(',',decode_utf8($line));
-
-        if ($data[0] =~ /$search[2]/) {
-            $text = $text . $data[0] . "\n" .
-                    $data[1] . "\n";
-            if ($data[2] eq "1") {
-                $text = $text . get_weather($data[1])."\n";
-            }
-            $flag = 1;
-        }
-    }
-    close $fh;
-
-    return "見つかりませんでした" if ($flag == 0);
+    my $text = weather_text($search[2]);
     return $text;
 }
+
+sub weather_text {
+    my ($search) = @_;
+
+    my $weatherurl = selectdb($search);
+
+    my $text = "";
+    my $flag = 0;
+
+    for my $line (@$weatherurl) {
+        my @data = split(',',decode_utf8($line));
+
+        $text = $text . $data[0] . "\n" .
+                $data[1] . "\n";
+        if ($data[2] eq "1") {
+            $text = $text . get_weather($data[1])."\n";
+        }
+        $flag = 1;
+    }
+
+    if ($flag == 0) {
+        $text = "見つかりませんでした";
+    }
+    return $text;
+}
+
+sub selectdb {
+    my ($search) = @_;
+    if ($search =~ /\w+/) {
+        $search =~ tr/A-Z/a-z/;
+    }
+
+    my $file = "./tenkilink.db";
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$file", undef, undef, {
+            AutoCommit => 1, RaiseError => 1, PrintError => 0, });
+    my $sql = <<EOS;
+select distinct 
+t_name.name_kanji, t_link.url, t_link.tenki_flag from t_name 
+left outer join t_link on t_name.link_id  = t_link.id
+where name like ?
+order by t_link.id asc;
+EOS
+    my $sth = $dbh->prepare($sql);
+    $search .= "\%";
+    $sth->execute($search) or die "Error: " . $dbh->errstr;
+
+    my $array;
+    while (my $array_ref = $sth->fetchrow_arrayref) {
+        my ($name, $url, $flag) = @$array_ref;
+        push(@$array, "$name,$url,$flag");
+    }
+    $dbh->disconnect();
+
+    return $array;
+}
+
 
 sub get_weather {
     my ($link) = @_;
     my $id;
     if ($link =~ m|http://weather\.livedoor\.com/area/forecast/(\d+)|) {
         $id = $1;
+    } else {
+        return "";
     }
     my $jsonuri = "http://weather.livedoor.com/forecast/webservice/json/v1?city=" . $id;
     my $ua = LWP::UserAgent->new();
