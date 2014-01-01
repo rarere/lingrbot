@@ -8,7 +8,7 @@ use LWP::UserAgent;
 use JSON::PP;
 use DBI;
 
-our $VERSION = "0.05";
+our $VERSION = "0.06";
 
 sub get_text {
     my $class = shift;
@@ -53,6 +53,9 @@ sub selectdb {
     my ($search) = @_;
     if ($search =~ /\w+/) {
         $search =~ tr/A-Z/a-z/;
+        $search .= "\%";
+    } else {
+        $search = "\%$search\%";
     }
 
     my $file = "./tenkilink.db";
@@ -66,7 +69,6 @@ where name like ?
 order by t_link.id asc;
 EOS
     my $sth = $dbh->prepare($sql);
-    $search .= "\%";
     $sth->execute($search) or die "Error: " . $dbh->errstr;
 
     my $array;
