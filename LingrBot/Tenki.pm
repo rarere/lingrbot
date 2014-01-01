@@ -51,7 +51,7 @@ sub weather_text {
 
 sub selectdb {
     my ($search) = @_;
-    if ($search =~ /\w+/) {
+    if ($search =~ /[a-zA-Z0-9_]+/) {
         $search =~ tr/A-Z/a-z/;
         $search .= "\%";
     } else {
