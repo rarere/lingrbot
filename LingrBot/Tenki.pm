@@ -8,7 +8,7 @@ use LWP::UserAgent;
 use JSON::PP;
 use DBI;
 
-our $VERSION = "0.04";
+our $VERSION = "0.05";
 
 sub get_text {
     my $class = shift;
