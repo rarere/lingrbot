@@ -3,25 +3,25 @@ package LingrBot;
 
 use v5.14;
 use warnings;
-
-our $VERSION = "0.01";
-
 use utf8;
 use Encode;
 use JSON;
+use LingrBot::Tekitou;
+
+our $VERSION = "0.02";
 
 sub new {
     my $class = shift;
     my %args = @_;
 
-    my $data //= '{"status":"", "counter":0, "events":[ {"event_id":0,
+    my $json //= '{"status":"", "counter":0, "events":[ {"event_id":0,
        "message": {"id":0, "room":"", "public_session_id":"", "icon_url":"",
            "type":"", "speaker_id":"", "nickname":"", "text":"",
            "timestamp":"", "local_id":""}}]}';
     if (defined $ENV{'CONTENT_LENGTH'}) {
-        read(STDIN, $data, $ENV{'CONTENT_LENGTH'});
+        read(STDIN, $json, $ENV{'CONTENT_LENGTH'});
     }
-    $args{json} = decode_json($data);
+    $args{json} = decode_json($json);
 
     my $self = \%args;
     bless $self, $class;
@@ -29,24 +29,16 @@ sub new {
     return $self;
 }
 
-sub get_speaker_id {
-    my $self = shift;
-    my $json = $self->{json};
-    return $json->{events}->[0]->{message}->{speaker_id};
-}
-sub get_nickname {
-    my $self = shift;
-    my $json = $self->{json};
-    return $json->{events}->[0]->{message}->{nickname};
-}
-sub get_text {
-    my $self = shift;
-    return $self->{json}->{events}->[0]->{message}->{text};
-}
 sub print_text {
     my $self = shift;
-    my $text = shift;
-    $text //= "";
+
+    my %data = (
+        speaker_id => $self->{json}->{events}->[0]->{message}->{speaker_id},
+        nickname => $self->{json}->{events}->[0]->{message}->{nickname},
+        text => $self->{json}->{events}->[0]->{message}->{text},
+    );
+
+    my $text = Tekitou->get_text(\%data);
     print "Content-Type: text/plain\n\n";
     print encode_utf8($text);
 }
@@ -65,6 +57,8 @@ LingrBot - It's new for Lingr Bot
 =head1 SYNOPSIS
 
     use LingrBot;
+    my $bot = LingrBot->new();
+    $bot->print_text();
 
 =head1 DESCRIPTION
 

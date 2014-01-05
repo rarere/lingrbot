@@ -47,7 +47,7 @@ subtest 'post hi!' => sub {
         $str = $res->code . ":" . $res->message;
     }
 
-    is $str, 'hi, nickname';
+    is $str, 'hi, nickname!';
 };
 
 subtest 'post hi!(japanese)' => sub {
@@ -63,7 +63,7 @@ subtest 'post hi!(japanese)' => sub {
         $str = $res->code . ":" . $res->message;
     }
 
-    is $str, 'hi, にっくねーむ';
+    is $str, 'hi, にっくねーむ!';
 };
 
 subtest encode_utf8('post マスター、お茶一杯') => sub {
