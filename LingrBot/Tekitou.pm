@@ -34,7 +34,7 @@ sub get_text {
             $ret = Help->get_text($text);
         }
     } elsif ($text =~ /^(大将|マスター)、/) {
-        $ret = Nomimono->get_text($text);
+        $ret = Taisho->get_text($text);
     }
 
     return $ret;
