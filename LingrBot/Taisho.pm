@@ -13,7 +13,7 @@ sub get_text {
     $text //= "";
 
     my $taisho_text = "";
-    if ($text =~ /(大将|マスター)、(.*)一[杯枚丁羽個本斗合粒匹玉]/) {
+    if ($text =~ /(大将|マスター)、(.*)一[杯枚丁羽個本斗合粒匹玉貫皿巻]/) {
         $taisho_text = ippai($2);
     } elsif ($text =~ /会計/) {
         $taisho_text = kaikei();
