@@ -1,4 +1,4 @@
-package Nomimono;
+package Taisho;
 
 use v5.14;
 use warnings;
@@ -12,14 +12,14 @@ sub get_text {
 
     $text //= "";
 
-    my $nomimono_text = "";
-    if ($text =~ /マスター、(.*)一杯/) {
-        $nomimono_text = ippai($1);
+    my $taisho_text = "";
+    if ($text =~ /(大将|マスター)、(.*)一[杯枚丁羽個本斗合粒匹玉]/) {
+        $taisho_text = ippai($2);
     } elsif ($text =~ /会計/) {
-        $nomimono_text = kaikei();
+        $taisho_text = kaikei();
     }
 
-    return $nomimono_text;
+    return $taisho_text;
 }
 
 sub ippai {

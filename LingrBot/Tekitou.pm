@@ -5,7 +5,7 @@ use warnings;
 use utf8;
 use Encode;
 use LingrBot::Henji;
-use LingrBot::Nomimono;
+use LingrBot::Taisho;
 use LingrBot::Tenki;
 use LingrBot::Help;
 
@@ -33,7 +33,7 @@ sub get_text {
         } elsif (defined $str[1] && $str[1] eq "help") {
             $ret = Help->get_text($text);
         }
-    } elsif ($text =~ /^マスター、/) {
+    } elsif ($text =~ /^(大将|マスター)、/) {
         $ret = Nomimono->get_text($text);
     }
 
