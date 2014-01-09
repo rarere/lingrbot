@@ -4,6 +4,5 @@ use warnings;
 use utf8;
 use LingrBot;
 
-my $bot = LingrBot->new();
-$bot->print_text();
+LingrBot->talk();
 

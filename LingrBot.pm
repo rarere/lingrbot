@@ -1,4 +1,3 @@
-#!/usr/bin/perl -w
 package LingrBot;
 
 use v5.14;
@@ -8,9 +7,9 @@ use Encode;
 use JSON;
 use LingrBot::Tekitou;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
-sub new {
+sub talk {
     my $class = shift;
     my %args = @_;
 
@@ -24,13 +23,6 @@ sub new {
     $args{json} = decode_json($json);
 
     my $self = \%args;
-    bless $self, $class;
-
-    return $self;
-}
-
-sub print_text {
-    my $self = shift;
 
     my %data = (
         speaker_id => $self->{json}->{events}->[0]->{message}->{speaker_id},
@@ -57,8 +49,7 @@ LingrBot - It's new for Lingr Bot
 =head1 SYNOPSIS
 
     use LingrBot;
-    my $bot = LingrBot->new();
-    $bot->print_text();
+    LingrBot->talk();
 
 =head1 DESCRIPTION
 
