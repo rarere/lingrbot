@@ -4,7 +4,7 @@ use utf8;
 use Test::More;
 use LingrBot::Taisho;
 
-subtest 'test' => sub {
+subtest 'no reply' => sub {
     my $str = Taisho->get_text("!tekitou sac 12");
     is $str, '';
 };
@@ -23,6 +23,13 @@ subtest 'kaikei' => sub {
     like $str, qr/\d+円になります/;
 };
 
-
+subtest 'kaikei' => sub {
+    my $str = Taisho->oshinagaki();
+    my $str2 = <<EOS;
+お茶: 200円
+スコッチ: 700円
+EOS
+    is $str, $str2;
+};
 
 done_testing;

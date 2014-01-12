@@ -3,6 +3,8 @@ package Taisho;
 use v5.14;
 use warnings;
 use utf8;
+use Encode;
+use DBI;
 
 our $VERSION = "0.03";
 
@@ -26,6 +28,8 @@ sub taisho_message {
 
     if ($text =~ /(.*)一[杯枚丁羽個本斗合粒匹玉貫皿巻]/) {
         $ret = ippai($1);
+    } elsif ($text =~ /おしながき|お品書き/) {
+        $ret = oshinagaki();
     } elsif ($text =~ /会計/) {
         $ret = kaikei();
     }
@@ -44,6 +48,27 @@ sub ippai {
         $ret = "つ 請求書";
     }
     return $ret;
+}
+
+sub oshinagaki {
+    my $self = shift;
+
+    my $file = "./taisho.db";
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$file", undef, undef, {
+            AutoCommit => 1, RaiseError => 1, PrintError => 0, });
+    my $sql = "select menu, price from t_menu order by id asc;";
+    my $sth = $dbh->prepare($sql);
+    $sth->execute() or die "Error: " . $dbh->errstr;
+
+    my $array;
+    while (my $array_ref = $sth->fetchrow_arrayref) {
+        my ($menu, $price) = @$array_ref;
+        $menu = decode_utf8($menu);
+        $array .= "${menu}: ${price}円\n";
+    }
+    $dbh->disconnect();
+
+    return $array;
 }
 
 sub kaikei {
