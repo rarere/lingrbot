@@ -6,7 +6,7 @@ use utf8;
 use Encode;
 use DBI;
 
-our $VERSION = "0.04";
+our $VERSION = "0.05";
 
 sub get_text {
     my $class = shift;
@@ -67,7 +67,7 @@ sub oshinagaki {
 }
 
 sub get_oshinagaki {
-    my $file = "./taisho.db";
+    my $file = "./db/taisho.db";
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file", undef, undef, {
             AutoCommit => 1, RaiseError => 1, PrintError => 0, });
 
@@ -99,7 +99,7 @@ sub add_oshinagaki {
         return "数字じゃないです";
     }
 
-    my $file = "./taisho.db";
+    my $file = "./db/taisho.db";
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file", undef, undef, {
             AutoCommit => 1, RaiseError => 1, PrintError => 0, });
 

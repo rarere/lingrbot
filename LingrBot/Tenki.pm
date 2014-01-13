@@ -8,7 +8,7 @@ use LWP::UserAgent;
 use JSON::PP;
 use DBI;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 sub get_text {
     my $class = shift;
@@ -58,7 +58,7 @@ sub selectdb {
         $search = "\%$search\%";
     }
 
-    my $file = "./tenkilink.db";
+    my $file = "./db/tenkilink.db";
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file", undef, undef, {
             AutoCommit => 1, RaiseError => 1, PrintError => 0, });
     my $sql = <<EOS;
