@@ -23,13 +23,30 @@ subtest 'kaikei' => sub {
     like $str, qr/\d+円になります/;
 };
 
-subtest 'kaikei' => sub {
+subtest 'oshinagaki' => sub {
     my $str = Taisho->oshinagaki();
     my $str2 = <<EOS;
 お茶: 200円
 スコッチ: 700円
+コーラ: 400円
 EOS
     is $str, $str2;
+};
+subtest 'oshinagaki tsuika error1' => sub {
+    my $str = Taisho->get_text("大将、おしながき 追加");
+    is $str, "なんもないです";
+};
+subtest 'oshinagaki tsuika error2' => sub {
+    my $str = Taisho->get_text("大将、おしながき 追加 コーラ");
+    is $str, "金額ないです";
+};
+subtest 'oshinagaki tsuika error3' => sub {
+    my $str = Taisho->get_text("大将、おしながき 追加 コーラ こーら");
+    is $str, "数字じゃないです";
+};
+subtest 'oshinagaki tsuika ok' => sub {
+    my $str = Taisho->get_text("大将、おしながき 追加 コーラ 400");
+    is $str, '"コーラ: 400円" を追加しました';
 };
 
 done_testing;
