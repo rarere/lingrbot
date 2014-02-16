@@ -116,7 +116,7 @@ sub get_kaikei {
     my $kaikei = 0;
     while (my $array_ref = $sth->fetchrow_arrayref) {
         my ($goukei) = @$array_ref;
-        $kaikei .= $goukei;
+        $kaikei = $goukei;
     }
     $dbh->disconnect;
     return $kaikei;
