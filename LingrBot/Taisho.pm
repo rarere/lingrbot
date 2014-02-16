@@ -48,14 +48,16 @@ sub ippai {
     my ($text, $nickname) = @_;
 
     my $kakaku = get_kakaku($text);
-    my $kaikei = add_kaikei($kakaku, $nickname);
+    my $kaikei = get_kaikei($kakaku, $nickname);
 
     my $ret;
     if ($kaikei < 50000) {
         $ret = "つ " . $text;
+        add_kaikei($kakaku, $nickname);
     } else {
-        $ret = "つ 請求書 ${kakaku}円";
+        $ret = "つ 請求書 ${kaikei}円";
     }
+
     return $ret;
 }
 
