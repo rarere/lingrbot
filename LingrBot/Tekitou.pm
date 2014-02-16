@@ -9,7 +9,7 @@ use LingrBot::Taisho;
 use LingrBot::Tenki;
 use LingrBot::Help;
 
-our $VERSION = "0.04";
+our $VERSION = "0.05";
 
 sub get_text {
     my $class = shift;
@@ -21,17 +21,17 @@ sub get_text {
 
     return "" if (!defined $text);
 
-    my @str = split(' ', $text);
     my $ret = "";
 
     # 返事
     if ($text eq "hi!") {
         $ret = "hi, " . $data->{nickname} . "!";
     } elsif ($text =~ /^(大将|マスター)、/) {
-        $ret = Taisho->get_text($text);
+        $ret = Taisho->get_text($text, $nickname);
     }
 
     # !tekitou コマンド
+    my @str = split(' ', $text);
     if ($ret eq ""  && $str[0] eq '!tekitou') {
         if ($text eq '!tekitou') {
             $ret = Henji->get_text($text);
